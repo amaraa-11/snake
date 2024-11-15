@@ -1,7 +1,7 @@
  const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
 
-        const box = 20; // Snake and food size
+        const box = 20; // mogoi bolon hoolnii hemjee
         let score = 0;
         let level = 1;
         let speed = 150;
@@ -88,7 +88,7 @@
                 collision(newHead, snake)
             ) {
                 clearInterval(game);
-                alert(`Azgvi psda hahah!Score: ${score}, Level: ${level}`);
+                alert(`Azgvi psda we hahah!Score: ${score}, Level: ${level} Dahiad shaahymu bro?`);
                 return;
             }
 
