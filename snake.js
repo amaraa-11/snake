@@ -1,7 +1,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-const box = 20; // mogoi bolon hoolnii hemjee
+const box = 20; 
 let score = 0;
 let level = 1;
 let speed = 150;
@@ -18,8 +18,8 @@ function initializeGame() {
   direction = "";
   snake = [{ x: 9 * box, y: 10 * box }];
   food = {
-    x: Math.floor(Math.random() * 20) * box,
-    y: Math.floor(Math.random() * 20) * box,
+    x: Math.floor(Math.random() * (canvas.width / box)) * box,
+    y: Math.floor(Math.random() * (canvas.height / box)) * box,
   };
 }
 
@@ -41,8 +41,9 @@ function collision(newHead, snake) {
 }
 
 function drawGame() {
-  ctx.fillStyle = "#222";
+  ctx.fillStyle = "#222"; 
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+
 
   for (let segment of snake) {
     ctx.fillStyle = "#4CAF50";
@@ -50,27 +51,30 @@ function drawGame() {
     ctx.strokeStyle = "#333";
     ctx.strokeRect(segment.x, segment.y, box, box);
   }
-
+  
   ctx.fillStyle = "#FF5722";
   ctx.fillRect(food.x, food.y, box, box);
 
+
   let snakeX = snake[0].x;
   let snakeY = snake[0].y;
+
 
   if (direction === "LEFT") snakeX -= box;
   if (direction === "UP") snakeY -= box;
   if (direction === "RIGHT") snakeX += box;
   if (direction === "DOWN") snakeY += box;
 
+
   if (snakeX === food.x && snakeY === food.y) {
     score++;
     food = {
-      x: Math.floor(Math.random() * 20) * box,
-      y: Math.floor(Math.random() * 20) * box,
+      x: Math.floor(Math.random() * (canvas.width / box)) * box,
+      y: Math.floor(Math.random() * (canvas.height / box)) * box,
     };
     if (score % 5 === 0) {
       level++;
-      speed -= 10;
+      speed = Math.max(50, speed - 10);
       clearInterval(game);
       game = setInterval(drawGame, speed);
     }
@@ -78,30 +82,41 @@ function drawGame() {
     snake.pop();
   }
 
+
   const newHead = { x: snakeX, y: snakeY };
+
 
   if (
     snakeX < 0 ||
-    snakeY < 0 ||
-    snakeX >= canvas.width ||
-    snakeY >= canvas.height ||
+    snakeY < 0 || 
+    snakeX + box > canvas.width ||
+    snakeY + box > canvas.height || 
     collision(newHead, snake)
   ) {
     clearInterval(game);
-    alert(`Game over! Score: ${score}, Level: ${level} Play again?`);
+    alert(`Game over! Score: ${score}, Level: ${level}. Play again?`);
     return;
   }
 
+
   snake.unshift(newHead);
 
+ 
   ctx.fillStyle = "white";
   ctx.font = "18px Arial";
-  ctx.fillText(`Score, ${score}`, 10, 20);
-  ctx.fillText(`Level, ${level}`, canvas.width - 100, 20);
+  ctx.fillText(`Score: ${score}`, 10, 20);
+  ctx.fillText(`Level: ${level}`, canvas.width - 100, 20);
 }
 
-function startGame() {
+
+
+
+
+const startButton = document.getElementById("startGame");
+
+startButton.addEventListener("click", () => {
   initializeGame();
-  clearInterval(game);
-  game = setInterval(drawGame, speed);
-}
+  clearInterval(game); 
+  game = setInterval(  drawGame, speed); 
+});
+
