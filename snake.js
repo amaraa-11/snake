@@ -62,8 +62,8 @@ function drawGame() {
 
   if (direction === "LEFT") snakeX -= box;
   if (direction === "UP") snakeY -= box;
-  if (direction === "RIGHT") snakeX += box;
-  if (direction === "DOWN") snakeY += box;
+  if (direction === "RIGHT") snakeX = box;
+  if (direction === "DOWN") snakeY = box;
 
 
   if (snakeX === food.x && snakeY === food.y) {
